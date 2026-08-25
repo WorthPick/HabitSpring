@@ -1,4 +1,4 @@
-# HealthyTogether
+# HabitSpring
 
 A mobile-first nutrition and health tracking app designed for community wellness support.
 
@@ -43,7 +43,7 @@ This app is built to support a real production database through Supabase.
 Example configuration:
 
 ```js
-window.HEALTHYTOGETHER_CONFIG = {
+window.HABITSPRING_CONFIG = {
   supabase: {
     enabled: true,
     url: 'https://xyzcompany.supabase.co',

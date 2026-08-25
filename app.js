@@ -1,6 +1,6 @@
 const USER_STORAGE_KEY = 'healthyTogetherUsers';
 const CURRENT_USER_KEY = 'healthyTogetherCurrentUser';
-const appConfig = window.HEALTHYTOGETHER_CONFIG || { supabase: { enabled: false } };
+const appConfig = window.HABITSPRING_CONFIG || window.HEALTHYTOGETHER_CONFIG || { supabase: { enabled: false } };
 const supabaseEnabled = Boolean(
   appConfig.supabase &&
   appConfig.supabase.enabled &&
@@ -12,7 +12,7 @@ const supabaseClient = supabaseEnabled
   ? window.supabase.createClient(appConfig.supabase.url, appConfig.supabase.anonKey, {
       auth: {
         persistSession: true,
-        storageKey: appConfig.supabase.storageKey || 'healthyTogetherAuthSession'
+        storageKey: appConfig.supabase.storageKey || 'habitSpringAuthSession'
       }
     })
   : null;

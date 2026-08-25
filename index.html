@@ -193,7 +193,7 @@
               <span class="icon">💧</span>
               <span>Hydration</span>
             </div>
-            <strong id="hydrationMetric">1.8 L</strong>
+            <strong id="hydrationMetric">0.0 L</strong>
             <small id="hydrationSub">Goal: 2.5 L</small>
             <div class="mini-bar"><span id="hydrationBar" style="width: 72%"></span></div>
           </article>
@@ -213,7 +213,7 @@
               <span class="icon">😌</span>
               <span>Recovery</span>
             </div>
-            <strong id="recoveryMetric">7.4 hrs</strong>
+            <strong id="recoveryMetric">0.0 hrs</strong>
             <small id="recoverySub">Sleep target: 8 hrs</small>
             <div class="mini-bar"><span id="recoveryBar" style="width: 93%"></span></div>
           </article>
@@ -359,7 +359,7 @@
                   </label>
                   <label>
                     Calories
-                    <input id="mealCalories" type="number" min="0" step="10" value="420" />
+                    <input id="mealCalories" type="number" min="0" step="10" />
                   </label>
                 </div>
 
@@ -370,7 +370,7 @@
                   </label>
                   <label>
                     Protein (g)
-                    <input id="mealProtein" type="number" min="0" step="1" value="18" />
+                    <input id="mealProtein" type="number" min="0" step="1" />
                   </label>
                 </div>
 
@@ -400,7 +400,7 @@
                   </label>
                   <label>
                     Minutes
-                    <input id="exerciseMinutes" type="number" min="5" step="5" value="20" />
+                    <input id="exerciseMinutes" type="number" min="5" step="5" />
                   </label>
                 </div>
 
@@ -411,7 +411,7 @@
                   </label>
                   <label>
                     Calories burnt
-                    <input id="exerciseCalories" type="number" min="0" step="10" value="120" />
+                    <input id="exerciseCalories" type="number" min="0" step="10" />
                   </label>
                 </div>
 
@@ -441,7 +441,7 @@
                   </label>
                   <label>
                     Minutes
-                    <input id="activityMinutes" type="number" min="5" step="5" value="30" />
+                    <input id="activityMinutes" type="number" min="5" step="5" />
                   </label>
                 </div>
 
@@ -464,8 +464,8 @@
                   <div class="water-fill" id="waterFill"></div>
                 </div>
                 <div class="water-readout">
-                  <strong id="waterAmount">1.8 L</strong>
-                  <span>of 2.5 L goal</span>
+                  <strong id="waterAmount">0.0 L</strong>
+                  <span id="waterGoalLabel">of 2.5 L goal</span>
                 </div>
               </div>
 
@@ -473,6 +473,8 @@
                 <button type="button" class="ghost-btn" data-water="250">+250ml</button>
                 <button type="button" class="ghost-btn" data-water="500">+500ml</button>
                 <button type="button" class="ghost-btn" data-water="750">+750ml</button>
+                <button type="button" class="ghost-btn" data-water="-250">-250ml</button>
+                <button type="button" class="ghost-btn" data-clear-water="true">Clear</button>
               </div>
             </section>
 
@@ -485,15 +487,15 @@
               <form id="metricsForm" class="stack-form compact">
                 <label>
                   Weight (kg)
-                  <input id="weightInput" type="number" min="20" max="300" step="0.1" value="68.4" />
+                  <input id="weightInput" type="number" min="20" max="300" step="0.1" />
                 </label>
                 <label>
                   Steps
-                  <input id="stepsInput" type="number" min="0" step="100" value="8400" />
+                  <input id="stepsInput" type="number" min="0" step="100" />
                 </label>
                 <label>
                   Sleep (hrs)
-                  <input id="sleepInput" type="number" min="0" max="24" step="0.1" value="7.4" />
+                  <input id="sleepInput" type="number" min="0" max="24" step="0.1" />
                 </label>
                 <label>
                   Mood
@@ -507,7 +509,7 @@
                 </label>
                 <label>
                   Blood pressure
-                  <input id="bpInput" type="text" value="118/76" placeholder="118/76" />
+                  <input id="bpInput" type="text" placeholder="118/76" />
                 </label>
                 <button type="submit" class="primary-btn wide">Update metrics</button>
               </form>

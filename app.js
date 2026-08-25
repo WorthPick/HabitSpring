@@ -82,8 +82,20 @@ function normalizeProfileState(rawState) {
     return emptyState;
   }
 
-  const demoComparable = JSON.stringify(demoState);
-  if (JSON.stringify(rawState) === demoComparable) {
+  const isSeededDemoState =
+    rawState.water === demoState.water &&
+    rawState.metrics?.weight === demoState.metrics.weight &&
+    rawState.metrics?.steps === demoState.metrics.steps &&
+    rawState.metrics?.sleep === demoState.metrics.sleep &&
+    rawState.metrics?.bloodPressure === demoState.metrics.bloodPressure &&
+    Array.isArray(rawState.meals) &&
+    rawState.meals.some((meal) => meal.name === 'Oat & berry bowl') &&
+    rawState.meals.some((meal) => meal.name === 'Chicken quinoa salad') &&
+    Array.isArray(rawState.activities) &&
+    rawState.activities.some((activity) => activity.type === 'Walk' && activity.minutes === 26) &&
+    rawState.activities.some((activity) => activity.type === 'Yoga' && activity.minutes === 20);
+
+  if (isSeededDemoState) {
     return emptyState;
   }
 
@@ -138,6 +150,7 @@ const elements = {
   activityList: document.getElementById('activityList'),
   waterFill: document.getElementById('waterFill'),
   waterAmount: document.getElementById('waterAmount'),
+  waterGoalLabel: document.getElementById('waterGoalLabel'),
   nutritionMetric: document.getElementById('nutritionMetric'),
   nutritionSub: document.getElementById('nutritionSub'),
   nutritionBar: document.getElementById('nutritionBar'),
@@ -582,6 +595,9 @@ function renderWater() {
   elements.waterFill.style.height = `${percent}%`;
   elements.waterAmount.textContent = `${(state.water / 1000).toFixed(1)} L`;
   elements.waterAmount.setAttribute('aria-label', `${state.water} milliliters of water`);
+  if (elements.waterGoalLabel) {
+    elements.waterGoalLabel.textContent = `of ${(state.goals.water / 1000).toFixed(1)} L goal`;
+  }
 }
 
 function syncGoalInputs() {
@@ -837,8 +853,6 @@ function addMeal(event) {
   });
 
   elements.mealForm.reset();
-  elements.mealCalories.value = 420;
-  elements.mealProtein.value = 18;
   renderAll();
 }
 
@@ -860,7 +874,6 @@ function addActivity(event) {
   });
 
   elements.activityForm.reset();
-  elements.activityMinutes.value = 30;
   renderAll();
 }
 
@@ -887,8 +900,6 @@ function addExercise(event) {
   });
 
   elements.exerciseForm.reset();
-  elements.exerciseMinutes.value = 20;
-  elements.exerciseCalories.value = 120;
   renderAll();
 }
 
@@ -910,7 +921,12 @@ function removeActivity(id) {
 }
 
 function addWater(amount) {
-  state.water = Math.min(state.water + amount, state.goals.water * 2);
+  state.water = Math.max(0, Math.min(state.water + amount, state.goals.water * 2));
+  renderAll();
+}
+
+function clearWater() {
+  state.water = 0;
   renderAll();
 }
 
@@ -991,6 +1007,10 @@ function bindEvents() {
 
   document.querySelectorAll('[data-water]').forEach((button) => {
     button.addEventListener('click', () => addWater(Number(button.dataset.water)));
+  });
+
+  document.querySelectorAll('[data-clear-water]').forEach((button) => {
+    button.addEventListener('click', clearWater);
   });
 
   document.querySelectorAll('.stepper-btn').forEach((button) => {

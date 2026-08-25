@@ -186,6 +186,7 @@ const elements = {
   sleepInput: document.getElementById('sleepInput'),
   moodInput: document.getElementById('moodInput'),
   bpInput: document.getElementById('bpInput'),
+  clearMetricsBtn: document.getElementById('clearMetricsBtn'),
   dashboardToggle: document.getElementById('dashboardToggle'),
   dashboardDrawer: document.getElementById('dashboardDrawer'),
   dashboardBackdrop: document.getElementById('dashboardBackdrop'),
@@ -619,7 +620,7 @@ function syncMetricInputs() {
   elements.weightInput.value = state.metrics.weight ? String(state.metrics.weight) : '';
   elements.stepsInput.value = state.metrics.steps ? String(state.metrics.steps) : '';
   elements.sleepInput.value = state.metrics.sleep ? String(state.metrics.sleep) : '';
-  elements.moodInput.value = String(state.metrics.mood || 3);
+  elements.moodInput.value = state.metrics.mood === '' ? '' : String(state.metrics.mood || 3);
   elements.bpInput.value = state.metrics.bloodPressure || '';
 }
 
@@ -932,11 +933,22 @@ function clearWater() {
 
 function updateMetrics(event) {
   event.preventDefault();
-  state.metrics.weight = Number(elements.weightInput.value) || state.metrics.weight;
-  state.metrics.steps = Number(elements.stepsInput.value) || state.metrics.steps;
-  state.metrics.sleep = Number(elements.sleepInput.value) || state.metrics.sleep;
-  state.metrics.mood = Number(elements.moodInput.value) || state.metrics.mood;
-  state.metrics.bloodPressure = elements.bpInput.value.trim() || state.metrics.bloodPressure;
+  state.metrics.weight = elements.weightInput.value.trim() === '' ? 0 : Number(elements.weightInput.value);
+  state.metrics.steps = elements.stepsInput.value.trim() === '' ? 0 : Number(elements.stepsInput.value);
+  state.metrics.sleep = elements.sleepInput.value.trim() === '' ? 0 : Number(elements.sleepInput.value);
+  state.metrics.mood = elements.moodInput.value === '' ? '' : Number(elements.moodInput.value);
+  state.metrics.bloodPressure = elements.bpInput.value.trim();
+  renderAll();
+}
+
+function clearMetrics() {
+  state.metrics = {
+    weight: 0,
+    steps: 0,
+    sleep: 0,
+    mood: '',
+    bloodPressure: '',
+  };
   renderAll();
 }
 
@@ -988,6 +1000,9 @@ function bindEvents() {
   }
   elements.activityForm.addEventListener('submit', addActivity);
   elements.metricsForm.addEventListener('submit', updateMetrics);
+  if (elements.clearMetricsBtn) {
+    elements.clearMetricsBtn.addEventListener('click', clearMetrics);
+  }
   if (elements.goalForm) {
     elements.goalForm.addEventListener('submit', updateGoals);
   }

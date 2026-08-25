@@ -500,8 +500,9 @@
                 <label>
                   Mood
                   <select id="moodInput" aria-label="Mood">
+                    <option value="">Not set</option>
                     <option value="5">Very good</option>
-                    <option value="4" selected>Good</option>
+                    <option value="4">Good</option>
                     <option value="3">Okay</option>
                     <option value="2">Low</option>
                     <option value="1">Very low</option>
@@ -512,6 +513,7 @@
                   <input id="bpInput" type="text" placeholder="118/76" />
                 </label>
                 <button type="submit" class="primary-btn wide">Update metrics</button>
+                <button type="button" id="clearMetricsBtn" class="ghost-btn wide">Clear metrics</button>
               </form>
             </section>
 
